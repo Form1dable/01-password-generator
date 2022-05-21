@@ -5,6 +5,7 @@ import PasswordInput from "./components/PasswordInput";
 import ProgressBar from "./components/ProgressBar";
 import Slider from "./components/Slider";
 import Validations from "./components/Validations";
+import generator from "./utils/generator";
 
 import "./index.css";
 
@@ -13,7 +14,7 @@ const App = () => {
 		input: "",
 		validations: {},
 		legnth: 6,
-		levels: [],
+		strength: "",
 	});
 
 	const handleDataChange = (payload) => {
@@ -21,7 +22,11 @@ const App = () => {
 	};
 
 	const handleGenerate = () => {
-		console.log(data);
+		const generatedPassword = generator(data.legnth, data.validations);
+		setData({
+			...data,
+			input: generatedPassword,
+		});
 	};
 
 	return (
@@ -31,9 +36,12 @@ const App = () => {
 					Password Generator
 				</h1>
 				{/* Password Box */}
-				<PasswordInput handleDataChange={handleDataChange} />
+				<PasswordInput
+					handleDataChange={handleDataChange}
+					generatedInput={data.input}
+				/>
 				{/* Password Progress Bar */}
-				<ProgressBar />
+				{/* <ProgressBar strength={data.strength} /> */}
 				{/* Password Length */}
 				<Slider handleDataChange={handleDataChange} />
 				{/* Password Options */}
@@ -41,7 +49,7 @@ const App = () => {
 
 				{/* Button */}
 				<button
-					className="mt-10 border-none bg-green-600 font-bold w-full py-4 px-8 text-lg rounded shadow-md"
+					className="mt-10 border-none bg-green-600 font-bold w-full py-4 px-8 text-lg rounded shadow-md active:bg-green-700 active:scale-95"
 					onClick={handleGenerate}
 				>
 					Generate

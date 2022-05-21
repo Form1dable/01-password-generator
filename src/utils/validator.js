@@ -1,1 +1,3 @@
-export default function validator(input) {}
+export default function validator(input) {
+    
+}
